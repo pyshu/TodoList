@@ -1,0 +1,73 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ToDoList</title>
+    <link href="{% static 'style.css' %}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" src="{% static 'jquery-3.2.0.min.js' %}"></script>
+</head>
+<body>
+<div class="content">
+    <h1>ToDoList</h1>
+    <form action="publish" method="get">
+        <textarea class="text" type="text" name="data" placeholder="有什么事情需要做？"></textarea>
+        <input class="btn" type="submit" value="Add" />
+    </form>
+    {% for data in datas %}
+        <div class="info">
+            {% if data.flag %}
+                <p style="text-decoration:line-through;" >{{ data.text }}</p>
+            {% else %}
+                <p>{{ data.text }}</p>
+            {% endif %}
+            <form id="publish" method="get"></form>
+            <button class="btn" type="submit" form="publish" formaction="delete" name="no" value={{ data.id }}>Delete</button>
+            <button class="btn" type="button" onclick="showBg('{{ data.id }}')"  name="no" value={{ data.id }}>Edit</button>
+            {% if data.flag %}
+                <input  class="chkbox" style="margin-top: 50px;" type="checkbox" checked="checked" value={{ data.id }} />
+            {% else %}
+                <input  class="chkbox" style="margin-top: 50px;" type="checkbox" value={{ data.id }} />
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+<div class="mask"></div>
+<div class="edit">
+    <p class="close"><a href="#" onclick="closeBg();">关闭</a></p>
+    <form action="edit" method="get">
+        <textarea class="text1" type="text" name="data"></textarea>
+        <input style="display: none" id="btnVal" type="text" name="no"  value="" />
+        <input class="btn1" type="submit" value="OK" />
+    </form>
+</div>
+
+<script type="text/javascript">
+    //显示灰色 jQuery 遮罩层
+    function showBg(no) {
+        $("#btnVal").val(no);
+        $(".mask").show();
+        $(".edit").show();
+    }
+    //关闭灰色 jQuery 遮罩
+    function closeBg() {
+        $(".mask,.edit").hide();
+    }
+    //选中标记为已读
+    $('.chkbox').click(function(){
+        if(this.checked)
+        {
+            dat = "no=" + this.value + "&flag=True";
+            $.ajax({type: 'GET', url: "flag",data: dat});
+        }
+        else
+        {
+            dat = "no=" + this.value + "&flag=False";
+            $.ajax({type: 'GET', url: "flag",data: dat});
+        }
+        window.location.reload();
+    });
+</script>
+
+</body>
+</html>
