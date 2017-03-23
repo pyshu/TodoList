@@ -21,4 +21,8 @@ from ToDoList import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
+    # url(r'^publish/', views.publish),
+    url(r'^delete/', views.delete),
+    url(r'^edit/', views.edit),
+    url(r'^flag/', views.flag),
 ]

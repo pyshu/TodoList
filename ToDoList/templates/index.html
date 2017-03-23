@@ -10,7 +10,8 @@
 <body>
 <div class="content">
     <h1>ToDoList</h1>
-    <form action="publish" method="get">
+    <form action="index" method="post">
+        {% csrf_token %}
         <textarea class="text" type="text" name="data" placeholder="有什么事情需要做？"></textarea>
         <input class="btn" type="submit" value="Add" />
     </form>
@@ -21,8 +22,10 @@
             {% else %}
                 <p>{{ data.text }}</p>
             {% endif %}
-            <form id="publish" method="get"></form>
-            <button class="btn" type="submit" form="publish" formaction="delete" name="no" value={{ data.id }}>Delete</button>
+            <form id="publish" method="get">
+                {% csrf_token %}
+            </form>
+            <button class="btn" type="submit" form="publish" formaction="/delete" name="no" value={{ data.id }}>Delete</button>
             <button class="btn" type="button" onclick="showBg('{{ data.id }}')"  name="no" value={{ data.id }}>Edit</button>
             {% if data.flag %}
                 <input  class="chkbox" style="margin-top: 50px;" type="checkbox" checked="checked" value={{ data.id }} />
@@ -35,7 +38,7 @@
 <div class="mask"></div>
 <div class="edit">
     <p class="close"><a href="#" onclick="closeBg();">关闭</a></p>
-    <form action="edit" method="get">
+    <form action="/edit" method="get">
         <textarea class="text1" type="text" name="data"></textarea>
         <input style="display: none" id="btnVal" type="text" name="no"  value="" />
         <input class="btn1" type="submit" value="OK" />
@@ -58,12 +61,12 @@
         if(this.checked)
         {
             dat = "no=" + this.value + "&flag=True";
-            $.ajax({type: 'GET', url: "flag",data: dat});
+            $.ajax({type: 'GET', url: "/flag/",data: dat});
         }
         else
         {
             dat = "no=" + this.value + "&flag=False";
-            $.ajax({type: 'GET', url: "flag",data: dat});
+            $.ajax({type: 'GET', url: "/flag/",data: dat});
         }
         window.location.reload();
     });
