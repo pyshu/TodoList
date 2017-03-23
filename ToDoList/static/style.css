@@ -10,7 +10,7 @@ body{
 }
 
 .content {
-    height: 700px;
+    height: 730px;
     width: 550px;
     background: rgba(136, 139, 126, 0.44);
     border: 2px solid #000;
@@ -146,4 +146,12 @@ body{
     border-radius: 10px;
     margin-left: 151px;
     margin-top: 3px;
+}
+
+.infos{
+    /*height: 550px;*/
+}
+
+.pagination{
+    float: left;
 }
