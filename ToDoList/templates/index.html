@@ -20,9 +20,9 @@
         {% for data in contacts %}
             <div class="info">
                 {% if data.flag %}
-                    <p style="text-decoration:line-through;">{{ data.text }}</p>
+                    <p style="text-decoration:line-through;">{{ data.text | time_filter:data.add_date }}</p>
                 {% else %}
-                    <p>{{ data.text| time_filter:data.add_date }}</p>
+                    <p>{{ data.text | time_filter:data.add_date }}</p>
                 {% endif %}
                 <form id="publish" method="get">
                     {% csrf_token %}
