@@ -1,4 +1,5 @@
 {% load staticfiles %}
+{% load time_filter %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +22,7 @@
                 {% if data.flag %}
                     <p style="text-decoration:line-through;">{{ data.text }}</p>
                 {% else %}
-                    <p>{{ data.text }}</p>
+                    <p>{{ data.text| time_filter:data.add_date }}</p>
                 {% endif %}
                 <form id="publish" method="get">
                     {% csrf_token %}
