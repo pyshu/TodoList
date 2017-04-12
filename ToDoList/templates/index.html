@@ -82,13 +82,27 @@
     $('.chkbox').click(function () {
         if (this.checked) {
             dat = "no=" + this.value + "&flag=True";
-            $.ajax({type: 'GET', url: "/flag/", data: dat});
+            $.ajax({type: 'GET',
+                url: "/flag/",
+                data: dat,
+                success:function()
+                {
+                    $(this).prevAll('p').css("text-decoration","line-through");
+                }.bind(this)
+            });
         }
         else {
             dat = "no=" + this.value + "&flag=False";
-            $.ajax({type: 'GET', url: "/flag/", data: dat});
+            $.ajax({type: 'GET',
+                url: "/flag/",
+                data: dat,
+                success:function()
+                {
+                    $(this).prevAll('p').css("text-decoration","");
+                }.bind(this)
+            });
         }
-        window.location.reload();
+{#        window.location.reload();#}
     });
 </script>
 

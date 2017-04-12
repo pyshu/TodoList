@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 
 from ToDoList.models import *
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect,HttpResponse
 from django.urls import reverse
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
@@ -35,18 +35,19 @@ def delete(request):
         print(request.GET['no'])
     print(request.method)
     return HttpResponseRedirect(reverse(index))
-#
+
 def edit(request):
     Informations.objects.filter(id=request.GET['no']).update(text=request.GET['data'])
     return HttpResponseRedirect(reverse(index))
 
 def flag(request):
-    if request.GET["flag"] == "True":
-        Informations.objects.filter(id=request.GET['no']).update(flag=1)
-        # pass
-    else:
-        Informations.objects.filter(id=request.GET['no']).update(flag=0)
-        # pass
-    return "no data"
-    # return HttpResponseRedirect(reverse(index))
+    try:
+        if request.GET["flag"] == "True":
+            Informations.objects.filter(id=request.GET['no']).update(flag=1)
+        else:
+            Informations.objects.filter(id=request.GET['no']).update(flag=0)
+    except Exception as err:
+        print(err)
+
+    return HttpResponse(u'True')
 
